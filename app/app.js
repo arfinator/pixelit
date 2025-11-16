@@ -163,6 +163,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
+  //*** Update palette preview
+  const updatePalettePreview = (paletteIndex) => {
+    const preview = document.getElementById('palette-preview');
+    preview.innerHTML = '';
+
+    const palette = paletteList[paletteIndex];
+    palette.forEach((color) => {
+      const colorDiv = document.createElement('div');
+      colorDiv.classList.add('colorblock');
+      colorDiv.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+      preview.appendChild(colorDiv);
+    });
+  };
+
   //*** Populate palette selector
   const populatePalettes = () => {
     const customPalettes = pullFromLocalStorage();
@@ -177,6 +191,9 @@ document.addEventListener("DOMContentLoaded", function () {
       option.textContent = `Palette ${i + 1} (${palette.length} colors)`;
       selector.appendChild(option);
     });
+
+    // Show preview of first palette
+    updatePalettePreview(0);
   };
 
   populatePalettes();
@@ -184,6 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //*** Palette selector
   document.getElementById("paletteselector").addEventListener("change", function(e) {
     currentPalette = parseInt(this.value);
+    updatePalettePreview(currentPalette);
     palette.checked = true;
     pixelate();
   });
