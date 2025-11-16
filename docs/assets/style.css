@@ -326,6 +326,13 @@ header .actions {
           transform: translateX(-50%);
   max-width: 100%;
   border: solid 5px #fdfdfd;
+  transition: opacity 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: copy;
+}
+
+.container canvas:hover {
+  box-shadow: 0 0 20px rgba(193, 86, 61, 0.3);
+  border-color: #c1563d;
 }
 
 .selectors {

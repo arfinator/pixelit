@@ -177,21 +177,65 @@ return unique_array;
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  //load image to canvas
+
+  //*** Helper function to load image from file/blob
+  const loadImageFromFile = (file) => {
+    if (file && file.type.startsWith('image/')) {
+      var img = new Image();
+      img.src = URL.createObjectURL(file);
+      img.onload = () => {
+        px.setFromImgSource(img.src);
+        pixelit();
+      };
+    }
+  };
+
+  //*** Clipboard paste event listener
+  document.addEventListener('paste', (e) => {
+    e.preventDefault();
+    const items = e.clipboardData?.items;
+    if (!items) return;
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.indexOf('image') !== -1) {
+        const file = items[i].getAsFile();
+        loadImageFromFile(file);
+        break;
+      }
+    }
+  });
+
+  //*** Drag and drop support
+  const dropZone = document.getElementById('pixelitcanvas');
+
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.style.opacity = '0.5';
+  });
+
+  dropZone.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.style.opacity = '1';
+  });
+
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropZone.style.opacity = '1';
+
+    const files = e.dataTransfer?.files;
+    if (files && files.length > 0) {
+      loadImageFromFile(files[0]);
+    }
+  });
+
+  //load image to canvas from file input
   document.getElementById("pixlInput").onchange = function (e) {
-    var img = new Image();
-    img.src = URL.createObjectURL(this.files[0]);
-    img.onload = () => {
-      //create element
-      //document.getElementById('teste').src = img.src;
-      px.setFromImgSource(img.src);
-      pixelit();
-      //.pixelate()
-      //.convertGrayscale()
-      //.convertPalette();
-      //.saveImage();
-      //console.log(px.getPalette());
-    };
+    if (this.files && this.files[0]) {
+      loadImageFromFile(this.files[0]);
+    }
   };
 
   //add color to palette
