@@ -163,48 +163,44 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  //*** Update palette preview
-  const updatePalettePreview = (paletteIndex) => {
-    const preview = document.getElementById('palette-preview');
-    preview.innerHTML = '';
-
-    const palette = paletteList[paletteIndex];
-    palette.forEach((color) => {
-      const colorDiv = document.createElement('div');
-      colorDiv.classList.add('colorblock');
-      colorDiv.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
-      preview.appendChild(colorDiv);
-    });
-  };
-
-  //*** Populate palette selector
+  //*** Populate visual palette selector
   const populatePalettes = () => {
     const customPalettes = pullFromLocalStorage();
     paletteList = [...paletteList, ...customPalettes];
 
-    const selector = document.getElementById("paletteselector");
+    const selector = document.getElementById("palette-selector-visual");
     selector.innerHTML = '';
 
     paletteList.forEach((palette, i) => {
-      const option = document.createElement("option");
-      option.value = i;
-      option.textContent = `Palette ${i + 1} (${palette.length} colors)`;
-      selector.appendChild(option);
-    });
+      const paletteOption = document.createElement("div");
+      paletteOption.classList.add('palette-option');
+      if (i === 0) paletteOption.classList.add('selected');
+      paletteOption.dataset.index = i;
 
-    // Show preview of first palette
-    updatePalettePreview(0);
+      palette.forEach((color) => {
+        const colorDiv = document.createElement('div');
+        colorDiv.classList.add('colorblock');
+        colorDiv.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+        paletteOption.appendChild(colorDiv);
+      });
+
+      paletteOption.addEventListener('click', () => {
+        // Remove selected from all
+        document.querySelectorAll('.palette-option').forEach(opt => {
+          opt.classList.remove('selected');
+        });
+        // Add selected to this one
+        paletteOption.classList.add('selected');
+        currentPalette = i;
+        palette.checked = true;
+        pixelate();
+      });
+
+      selector.appendChild(paletteOption);
+    });
   };
 
   populatePalettes();
-
-  //*** Palette selector
-  document.getElementById("paletteselector").addEventListener("change", function(e) {
-    currentPalette = parseInt(this.value);
-    updatePalettePreview(currentPalette);
-    palette.checked = true;
-    pixelate();
-  });
 
   //*** Controls
   const blocksize = document.getElementById("blocksize");
