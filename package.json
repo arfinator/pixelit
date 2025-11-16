@@ -27,7 +27,9 @@
     "appId": "com.pixelit.app",
     "productName": "PixelIt",
     "files": [
-      "docs/**/*",
+      "app/**/*",
+      "docs/js/**/*",
+      "docs/assets/sky.jpg",
       "electron-main.js"
     ],
     "win": {

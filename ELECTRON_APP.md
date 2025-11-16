@@ -1,17 +1,18 @@
 # PixelIt Desktop Application
 
-This version packages PixelIt as a standalone desktop application using Electron.
+A clean, simple desktop application for converting images to pixel art. No browser needed, no scrolling, just a focused workspace.
 
 ## Features
-- ✅ Copy/Paste images (Ctrl+V / Cmd+V)
-- ✅ Drag & Drop images
-- ✅ Upload images via file picker
-- ✅ Multiple color palettes
-- ✅ Custom palette creation
-- ✅ Grayscale conversion
-- ✅ Adjustable pixel block size
-- ✅ Image resizing options
-- ✅ Download pixelated images
+- ✅ **Copy/Paste images** (Ctrl+V / Cmd+V)
+- ✅ **Drag & Drop images**
+- ✅ **Upload images** via file picker
+- ✅ **12+ color palettes** built-in
+- ✅ **Custom palette creator**
+- ✅ **Grayscale conversion**
+- ✅ **Adjustable pixel block size** (2-50px)
+- ✅ **Image resizing** options
+- ✅ **Download** pixelated images
+- ✅ **Clean UI** - everything fits on one screen, no scrolling
 
 ## How to Run the Desktop App
 

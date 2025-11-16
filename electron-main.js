@@ -15,8 +15,8 @@ function createWindow() {
     title: 'PixelIt - Image to Pixel Art Converter'
   });
 
-  // Load the index.html file
-  mainWindow.loadFile(path.join(__dirname, 'docs/index.html'));
+  // Load the simplified desktop UI
+  mainWindow.loadFile(path.join(__dirname, 'app/index.html'));
 
   // Open DevTools in development (optional - comment out for production)
   // mainWindow.webContents.openDevTools();

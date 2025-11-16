@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PixelIt - Desktop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Left Panel: Canvas -->
+    <div class="canvas-panel">
+      <div class="canvas-wrapper">
+        <canvas id="pixelitcanvas"></canvas>
+        <div class="paste-hint">Paste image (Ctrl+V) or Drag & Drop</div>
+      </div>
+    </div>
+
+    <!-- Right Panel: Controls -->
+    <div class="controls-panel">
+      <h1>PixelIt</h1>
+
+      <div class="control-group">
+        <label>Upload Image</label>
+        <input type="file" id="pixlInput" accept="image/*">
+      </div>
+
+      <div class="control-group">
+        <label>Block Size: <span id="blockvalue">8</span></label>
+        <input type="range" min="2" max="50" value="8" id="blocksize" class="slider">
+      </div>
+
+      <div class="control-group">
+        <label>
+          <input type="checkbox" id="greyscale">
+          Grayscale
+        </label>
+      </div>
+
+      <div class="control-group">
+        <label>
+          <input type="checkbox" id="palette">
+          Use Color Palette
+        </label>
+      </div>
+
+      <div class="control-group">
+        <label>Select Palette</label>
+        <select id="paletteselector"></select>
+      </div>
+
+      <div class="control-group">
+        <label>Max Width (px)</label>
+        <input type="number" id="maxwidth" placeholder="Optional">
+      </div>
+
+      <div class="control-group">
+        <label>Max Height (px)</label>
+        <input type="number" id="maxheight" placeholder="Optional">
+      </div>
+
+      <div class="control-group">
+        <button id="downloadimage" class="btn-primary">Download Image</button>
+      </div>
+
+      <!-- Custom Palette Section -->
+      <details class="custom-palette-section">
+        <summary>Custom Palette</summary>
+        <div class="control-group">
+          <input type="color" id="customcolor" value="#ff0000">
+          <button id="addcustomcolor" class="btn-small">Add Color</button>
+        </div>
+        <div id="currentpallete" class="color-preview"></div>
+        <button id="savecustompalette" class="btn-small">Save Palette</button>
+        <button id="clearcustompalettes" class="btn-small">Clear All Custom</button>
+      </details>
+
+    </div>
+  </div>
+
+  <!-- Hidden default image -->
+  <img src="../docs/assets/sky.jpg" id="pixelitimg" style="display:none;" alt="">
+
+  <!-- Scripts -->
+  <script src="../docs/js/pixelit.min.js"></script>
+  <script src="app.js"></script>
+
+  <!-- Loader -->
+  <div class="loader">
+    <div class="spinner"></div>
+  </div>
+</body>
+</html>
