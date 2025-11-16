@@ -66,33 +66,63 @@ const loadImageFromFile = (file) => {
     img.onload = () => {
       px.setFromImgSource(img.src);
       pixelit();
+      showStatus('Image loaded successfully!', false);
     };
+    img.onerror = () => {
+      showStatus('Failed to load image!', true);
+    };
+  } else {
+    showStatus('Invalid file type. Please use an image!', true);
   }
+};
+
+//*** Show status message
+const showStatus = (message, isError = false) => {
+  const statusEl = document.getElementById('status-message');
+  statusEl.textContent = message;
+  statusEl.classList.toggle('error', isError);
+  statusEl.classList.add('show');
+  setTimeout(() => {
+    statusEl.classList.remove('show');
+  }, 3000);
 };
 
 //*** Initialize on DOM ready
 document.addEventListener("DOMContentLoaded", function () {
 
+  showStatus('App ready! Try pasting an image (Ctrl+V)', false);
+
   //*** Clipboard paste
   document.addEventListener('paste', (e) => {
     console.log('Paste event triggered!');
+    showStatus('Paste detected! Checking clipboard...', false);
+
     e.preventDefault();
     const items = e.clipboardData?.items;
     console.log('Clipboard items:', items);
 
-    if (!items) {
+    if (!items || items.length === 0) {
       console.log('No clipboard items found');
+      showStatus('No clipboard data found', true);
       return;
     }
 
+    let foundImage = false;
     for (let i = 0; i < items.length; i++) {
       console.log('Item', i, 'type:', items[i].type);
       if (items[i].type.indexOf('image') !== -1) {
         console.log('Found image! Loading...');
+        showStatus('Image found! Loading...', false);
+        foundImage = true;
         const file = items[i].getAsFile();
         loadImageFromFile(file);
         break;
       }
+    }
+
+    if (!foundImage) {
+      showStatus('No image in clipboard. Copy an image first!', true);
+      console.log('No image found in clipboard');
     }
   });
 
@@ -103,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     e.stopPropagation();
     dropZone.style.opacity = '0.5';
+    showStatus('Drop image here!', false);
   });
 
   dropZone.addEventListener('dragleave', (e) => {
@@ -118,7 +149,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const files = e.dataTransfer?.files;
     if (files && files.length > 0) {
+      showStatus('Processing dropped image...', false);
       loadImageFromFile(files[0]);
+    } else {
+      showStatus('No file dropped!', true);
     }
   });
 
