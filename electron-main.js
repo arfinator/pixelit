@@ -12,7 +12,7 @@ function createWindow() {
       enableRemoteModule: false
     },
     backgroundColor: '#21383a',
-    title: 'PixelIt - Image to Pixel Art Converter'
+    title: 'Pixelator - Image to Pixel Art Converter'
   });
 
   // Load the simplified desktop UI
