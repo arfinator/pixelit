@@ -75,12 +75,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //*** Clipboard paste
   document.addEventListener('paste', (e) => {
+    console.log('Paste event triggered!');
     e.preventDefault();
     const items = e.clipboardData?.items;
-    if (!items) return;
+    console.log('Clipboard items:', items);
+
+    if (!items) {
+      console.log('No clipboard items found');
+      return;
+    }
 
     for (let i = 0; i < items.length; i++) {
+      console.log('Item', i, 'type:', items[i].type);
       if (items[i].type.indexOf('image') !== -1) {
+        console.log('Found image! Loading...');
         const file = items[i].getAsFile();
         loadImageFromFile(file);
         break;

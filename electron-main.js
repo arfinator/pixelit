@@ -19,7 +19,7 @@ function createWindow() {
   mainWindow.loadFile(path.join(__dirname, 'app/index.html'));
 
   // Open DevTools in development (optional - comment out for production)
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   // Remove menu bar for cleaner look (optional)
   mainWindow.setMenuBarVisibility(false);
